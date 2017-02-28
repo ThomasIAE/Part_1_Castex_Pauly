@@ -1,42 +1,42 @@
-class Bonds(object):
-    """ this is a bond"""
+import matplotlib.pyplot as plt  # Import matplotlib
+import matplotlib
 
-    def __init__(self, short_bond, long_bond):
-        self.long_bond = long_bond
-        self.short_bond = short_bond
+#Create a class for each type of bond and a method to compute the return
+class short_bond(object):
+    def __init__(self, name):
+        self.name = name
 
-    def calculate_return(self, term, investment, minprice, minterm, interestrate):
+    def calculate_return(self, term, investment, interest_rate):
         self.term = term
         self.investment = investment
-        self.minprice = minprice
-        self.minterm = minterm
-        self.interestrate = interestrate
+        self.interest_rate = interest_rate
+        return investment * ((1 + interest_rate) ** term)
 
-        return investment * ((1 + interestrate) ** term)
+class long_bond(object):
+    def __init__(self, name):
+        self.name = name
 
-
-class short_bond(Bonds):
-    def calculate_return(self, term, investment, interestrate):
+    def calculate_return(self, term, investment, interest_rate):
         self.term = term
         self.investment = investment
-        self.interestrate = interestrate
-        return investment * ((1 + interestrate) ** term)
+        self.interest_rate = interest_rate
+        return investment * ((1 + interest_rate) ** term)
 
+bond1 = short_bond("bond1")
+bond2 = long_bond("bond2")
 
-class long_bond(Bonds):
-    def calculate_return(self, term, investment, interestrate):
-        self.term = term
-        self.investment = investment
-        self.interestrate = interestrate
-        return investment * ((1 + interestrate) ** term)
+#add the returns for each year until the 100th year
+bond1_return = []
+bond2_return = []
+for x in range(2, 101):
+    bond1_return.append(bond1.calculate_return(x, 1000, 0.01))
+for y in range(5, 101):
+    bond2_return.append(bond2.calculate_return(y, 3000, 0.03))
 
+#print(bond1_return)
+#print(bond2_return)
 
-print(short_bond.calculate_return(100, 1000, 0,01))
-print(long_bond.calculate_return(100, 3000, 0,03))
-
-plt.grid(True)
-plt.title("Investment evolution: ")
-plt.plot([date])
-plt.xlabel('Term')
-plt.ylabel('Investment')
+#plot the list you want
+plt.plot(bond2_return)
+plt.title('Long term bond return')
 plt.show()
